@@ -216,3 +216,21 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Medizinische Bilddaten (niemals committen - Patientendaten!)
+*.nii
+*.nii.gz
+*.dcm
+*.mha
+*.mhd
+*.nrrd
+data/
+raw_data/
+patient_data/
+
+# MITK-spezifisch
+*.mitkscene
+
+# Große Zwischenergebnisse
+*.npy
+*.npz
