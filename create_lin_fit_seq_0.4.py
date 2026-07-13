@@ -183,7 +183,7 @@ plt.savefig("/data/u_benndorf_thesis/BA/pCT_seq_0.4/mrt_pct_ct_plot_lin_coronal.
 plt.show()
 
 # plots poster
-def add_scalebar(ax, spacing_mm=0.75, length_cm=1, img_shape=None):
+def add_scalebar(ax, spacing_mm=0.4, length_cm=1, img_shape=None):
     length_mm = length_cm * 10
     length_px = length_mm / spacing_mm
     
@@ -194,58 +194,58 @@ def add_scalebar(ax, spacing_mm=0.75, length_cm=1, img_shape=None):
     else:
         x0, y0 = 20, 20
     
-    ax.plot([x0, x0 + length_px], [y0, y0], color="black", lw=3)
+    ax.plot([x0, x0 + length_px], [y0, y0], color="white", lw=3)
     ax.text(x0 + length_px / 2, y0 + h*0.02, f"{length_cm} cm",
-             color="black", fontsize=12, ha="center", va="bottom")
+             color="white", fontsize=12, ha="center", va="bottom")
 
 crop = 1  # Anzahl Voxel, die am Rand weggeschnitten werden
 
-# MRI
+# # MRI
+# y_mid = arr_mrt.shape[1] // 2
+# img_shape = arr_mrt[:, y_mid, :].shape
+
+# fig, ax = plt.subplots(figsize=(6, 6))
+# ax.imshow(arr_mrt[crop:-crop, y_mid, crop:-crop], cmap="gray", origin="lower")
+# ax.set_title("MRI (0.4mm)")
+# add_scalebar(ax, spacing_mm=0.4, length_cm=1, img_shape=img_shape)
+# ax.axis("off")
+# plt.savefig("/data/u_benndorf_thesis/BA/MRI_poster.png", dpi=600, bbox_inches="tight")
+# plt.show()
+
+
+
+# CT  
 y_mid = arr_mrt.shape[1] // 2
 img_shape = arr_mrt[:, y_mid, :].shape
 
 fig, ax = plt.subplots(figsize=(6, 6))
-ax.imshow(arr_mrt[crop:-crop, y_mid, crop:-crop], cmap="gray", vmin=0, vmax=1.5, origin="lower")
-ax.set_title("MRI (0.4mm)")
-add_scalebar(ax, spacing_mm=0.75, length_cm=1, img_shape=img_shape)
+ax.imshow(arr_ct[crop:-crop, y_mid, crop:-crop], cmap="gray",origin="lower")
+ax.set_title("CT")
+add_scalebar(ax, spacing_mm=0.4, length_cm=1, img_shape=img_shape)
 ax.axis("off")
-plt.savefig("/data/u_benndorf_thesis/BA/MRI_poster.png", dpi=600, bbox_inches="tight")
+plt.savefig("/data/u_benndorf_thesis/BA/CT_poster.png", dpi=600, bbox_inches="tight")
 plt.show()
 
+# mCT
+y_mid = arr_mrt.shape[1] // 2
+img_shape = arr_mrt[:, y_mid, :].shape
 
+fig, ax = plt.subplots(figsize=(6, 6))
+ax.imshow(arr_mct[crop:-crop, y_mid, crop:-crop], cmap="gray",origin="lower")
+ax.set_title("µCT")
+add_scalebar(ax, spacing_mm=0.4, length_cm=1, img_shape=img_shape)
+ax.axis("off")
+plt.savefig("/data/u_benndorf_thesis/BA/mCT_poster.png", dpi=600, bbox_inches="tight")
+plt.show()
 
-# # CT  
-# y_mid = arr_mrt.shape[1] // 2
-# img_shape = arr_mrt[:, y_mid, :].shape
+# pCT
+y_mid = arr_mrt.shape[1] // 2
+img_shape = arr_mrt[:, y_mid, :].shape
 
-# fig, ax = plt.subplots(figsize=(6, 6))
-# ax.imshow(arr_ct[crop:-crop, y_mid, crop:-crop], cmap="gray",origin="lower")
-# ax.set_title("CT")
-# add_scalebar(ax, spacing_mm=0.4, length_cm=1, img_shape=img_shape)
-# ax.axis("off")
-# #plt.savefig("/data/u_benndorf_thesis/BA/CT_poster.png", dpi=600)
-# plt.show()
-
-# # mCT
-# y_mid = arr_mrt.shape[1] // 2
-# img_shape = arr_mrt[:, y_mid, :].shape
-
-# fig, ax = plt.subplots(figsize=(6, 6))
-# ax.imshow(arr_mct[crop:-crop, y_mid, crop:-crop], cmap="gray",origin="lower")
-# ax.set_title("µCT")
-# add_scalebar(ax, spacing_mm=0.4, length_cm=1, img_shape=img_shape)
-# ax.axis("off")
-# #plt.savefig("/data/u_benndorf_thesis/BA/mCT_poster.png", dpi=600)
-# plt.show()
-
-# # pCT
-# y_mid = arr_mrt.shape[1] // 2
-# img_shape = arr_mrt[:, y_mid, :].shape
-
-# fig, ax = plt.subplots(figsize=(6, 6))
-# ax.imshow(arr_mct[crop:-crop, y_mid, crop:-crop], cmap="gray",origin="lower")
-# ax.set_title("pCT")
-# add_scalebar(ax, spacing_mm=0.4, length_cm=1, img_shape=img_shape)
-# ax.axis("off")
-# #plt.savefig("/data/u_benndorf_thesis/BA/pCT_poster.png", dpi=600)
-# plt.show()
+fig, ax = plt.subplots(figsize=(6, 6))
+ax.imshow(pct_array_masked[crop:-crop, y_mid, crop:-crop], cmap="gray",origin="lower")
+ax.set_title("pCT")
+add_scalebar(ax, spacing_mm=0.4, length_cm=1, img_shape=img_shape)
+ax.axis("off")
+plt.savefig("/data/u_benndorf_thesis/BA/pCT_poster.png", dpi=600, bbox_inches="tight")
+plt.show()
