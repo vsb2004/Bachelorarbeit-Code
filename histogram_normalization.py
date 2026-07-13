@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 
 # Bild laden
-image = sitk.ReadImage("/data/u_benndorf_thesis/BA/quick_fun_abstract/v5/MRTK_n4_rot_reg_cropped_reg_cropped_reg.nrrd") # auf das Micro-CT registrierte MRT (als .nrrd)
+image = sitk.ReadImage("/data/u_benndorf_thesis/BA/petra_paper_K.nrrd") # auf das Micro-CT registrierte MRT (als .nrrd)
 array = sitk.GetArrayFromImage(image)
 
 # Histogramm berechnen (Anzahl der Voxel (Großteil des Hintergrunds ausgeschlossen/leere Voxel) pro Intensitätswert, 1000 Klassen)
@@ -64,8 +64,8 @@ print(f"Peak gefunden bei: {peak_value:.2f}")
 plt.figure(figsize=(10, 5))
 plt.hist(voxels, bins=1000, color="indigo")
 plt.xlabel("Intensität")
-plt.xlim(0, 500)
-plt.ylim(0, 650000)
+plt.xlim(0, 750)
+plt.ylim(0, 15000000)
 plt.ylabel("Anzahl der Voxel")
 
 # Peak markieren
@@ -76,7 +76,7 @@ plt.annotate(f"Intensität= {peak_value:.0f}",
              fontsize=14,
              color="red")
 
-plt.savefig("/data/u_benndorf_thesis/BA/quick_fun_abstract/v5/MRTK_histogramm.pdf")
+#plt.savefig("/data/u_benndorf_thesis/BA/quick_fun_abstract/v5/MRTK_histogramm.pdf")
 plt.show()
 #print(f"Peak gefunden bei: {peak_value:.2f}") # Methode 1
 print(f"Schwellwert (Otsu): {threshold:.2f}") # Methode 2
@@ -88,7 +88,7 @@ print("Peak auf 1 gesetzt")
 # normalisiertes MRT als .nrrd speichern
 result = sitk.GetImageFromArray(normalized)
 result.CopyInformation(image)
-sitk.WriteImage(result, "/data/u_benndorf_thesis/BA/quick_fun_abstract/v5/MRTK_normalized.nrrd")
+sitk.WriteImage(result, "/data/u_benndorf_thesis/BA/petra_paper_normalized.nrrd")
 print(f"Peak war: {peak_value:.2f}")
 print("Fertig!")
 

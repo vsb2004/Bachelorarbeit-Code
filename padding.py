@@ -1,17 +1,29 @@
+"""
+@author: Valeria Benndorf
+
+Vergrößerung des Volumens des mCT um einen Rand (Padding), um den Verlust von
+Bildinformationen bei der späteren manuellen Vorausrichtung zu vermeiden
+"""
+
+
 import SimpleITK as sitk
+import os
 
-microct = sitk.ReadImage("/data/tu_benndorf/Halle_skull/halle_skull.nrrd")
+input_dir = "/data/u_benndorf_thesis/BA"
+output_dir = "/data/u_benndorf_thesis/BA"
+microct_path = os.path.join(input_dir, "halle_skull.nrrd")
 
-# Kleineres Padding nötig als beim CT,
-# da Micro-CT Voxel sehr klein sind (0.125mm)
-# 200 Voxel = 200 × 0.125mm = 25mm Puffer
+microct = sitk.ReadImage(microct_path)
+
+# 200 Voxel = 200 × 0.125mm = 25mm 
 padded = sitk.ConstantPad(
     microct,
     padLowerBound=[200, 200, 200],
     padUpperBound=[200, 200, 200],
-    constant=-1000
+    constant=-1000                  # entspricht CT-Zahl von Luft in HU
 )
 
-sitk.WriteImage(padded, "/data/tu_benndorf_private/microct_padded.nrrd")
+# Speichern
+sitk.WriteImage(padded, os.path.join(output_dir, "mct_padded.nii"))
 print("Originalgröße:  ", microct.GetSize())
 print("Neue Größe:     ", padded.GetSize())
